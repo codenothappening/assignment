@@ -7,6 +7,7 @@ import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.CrudRepository;
 
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Repository for Member entities.
@@ -16,4 +17,8 @@ import java.util.Optional;
 public interface MemberRepository extends CrudRepository<Member, Long> {
 
     Optional<Member> findByMemberCode(String memberCode);
+
+    List<Member> findByMemberIdInList(List<Long> memberIds);
+
+    Member save(Member entity);
 }

@@ -30,6 +30,14 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+  openapi:
+    enabled: true
+  views:
+    swagger:
+      enabled: true
+
+swagger-ui:
+  enabled: true
 
 datasources:
   default:
@@ -83,13 +91,3 @@ logger:
     com.payment: INFO
     io.micronaut: INFO
     io.micronaut.data: DEBUG
-
-# OpenAPI Configuration
-micronaut:
-  openapi:
-    enabled: true
-  views:
-    swagger:
-      enabled: true
-swagger-ui:
-  enabled: true

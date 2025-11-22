@@ -3,6 +3,8 @@ import { FilterState, DEFAULT_FILTERS } from '../types/transaction';
 import { TransactionList } from '../components/common/TransactionList';
 import { TransactionSummary } from '../components/common/TransactionSummary';
 import { useTransactions } from '../hooks/useTransactions';
+import { TransactionFilters } from '../components/transactions/TransactionFilters';
+import { Pagination } from '../components/common/Pagination';
 
 /**
  * Transactions Page Component
@@ -10,7 +12,7 @@ import { useTransactions } from '../hooks/useTransactions';
  */
 export const Transactions = () => {
   const merchantId = import.meta.env.VITE_DEFAULT_MERCHANT_ID || 'MCH-00001';
-  const [filters] = useState<FilterState>(DEFAULT_FILTERS);
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
 
   const { data, loading, error } = useTransactions(merchantId, filters);
 
@@ -19,12 +21,7 @@ export const Transactions = () => {
       <h1>Transaction Dashboard</h1>
       <p className="subtitle">Merchant: {merchantId}</p>
 
-      {/* TODO: Add TransactionFilters component */}
-      <div className="filters-section">
-        <p style={{ padding: '1rem', background: '#fef3c7', borderRadius: '8px', color: '#92400e' }}>
-          🔧 TODO: Implement TransactionFilters component (date range, status filter)
-        </p>
-      </div>
+      <TransactionFilters filters={filters} onChange={(next) => setFilters((prev) => ({ ...prev, ...next }))} />
 
       {error && (
         <div className="error-message" style={{ padding: '1rem', background: '#fee2e2', borderRadius: '8px', color: '#991b1b', margin: '1rem 0' }}>
@@ -54,9 +51,13 @@ export const Transactions = () => {
             />
           </div>
 
-          {/* TODO: Add Pagination component */}
-          <div className="pagination-section" style={{ padding: '1rem', marginTop: '1rem', background: '#fef3c7', borderRadius: '8px', color: '#92400e' }}>
-            <p>🔧 TODO: Implement Pagination component (showing page {data.page + 1}, {data.totalTransactions} total transactions)</p>
+          <div className="pagination-section" style={{ paddingTop: '1rem' }}>
+            <Pagination
+              page={data.page}
+              size={data.size}
+              totalElements={data.totalTransactions}
+              onPageChange={(next) => setFilters((prev) => ({ ...prev, page: next }))}
+            />
           </div>
         </>
       )}

@@ -40,7 +40,7 @@ export const useTransactions = (
       setLoading(true);
       setError(null);
       const response = await getTransactions(merchantId, filters);
-      setData(response as any);
+      setData(response);
     } catch (err) {
       setError(err as Error);
       console.error('Error fetching transactions:', err);
